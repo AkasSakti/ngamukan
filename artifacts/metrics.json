@@ -1,0 +1,106 @@
+{
+  "best_configuration": {
+    "scenario": "no_feature_selection",
+    "model": "random_forest",
+    "n_features": 2548,
+    "accuracy": 0.9882903981264637,
+    "precision_macro": 0.9882788606192863,
+    "recall_macro": 0.988262910798122,
+    "f1_macro": 0.9882627652759696,
+    "cv_accuracy_mean": 0.9812316715542522,
+    "cv_accuracy_std": 0.01090972154706056,
+    "cv_f1_mean": 0.9811959039893605,
+    "cv_f1_std": 0.010946751792325954,
+    "roc_auc_micro": 0.9995722018987655
+  },
+  "class_names": [
+    "NEGATIVE",
+    "NEUTRAL",
+    "POSITIVE"
+  ],
+  "classification_report": {
+    "NEGATIVE": {
+      "precision": 0.9790209790209791,
+      "recall": 0.9859154929577465,
+      "f1-score": 0.9824561403508771,
+      "support": 142.0
+    },
+    "NEUTRAL": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 143.0
+    },
+    "POSITIVE": {
+      "precision": 0.9858156028368794,
+      "recall": 0.9788732394366197,
+      "f1-score": 0.9823321554770318,
+      "support": 142.0
+    },
+    "accuracy": 0.9882903981264637,
+    "macro avg": {
+      "precision": 0.9882788606192863,
+      "recall": 0.988262910798122,
+      "f1-score": 0.9882627652759696,
+      "support": 427.0
+    },
+    "weighted avg": {
+      "precision": 0.9883063105944168,
+      "recall": 0.9882903981264637,
+      "f1-score": 0.9882902529451125,
+      "support": 427.0
+    }
+  },
+  "confusion_matrix": [
+    [
+      140,
+      0,
+      2
+    ],
+    [
+      0,
+      143,
+      0
+    ],
+    [
+      3,
+      0,
+      139
+    ]
+  ],
+  "roc_auc": {
+    "NEGATIVE": 0.9994316777860144,
+    "NEUTRAL": 1.0,
+    "POSITIVE": 0.9993575488015815,
+    "micro": 0.9995722018987655
+  },
+  "cv_f1_scores": [
+    0.973670709342974,
+    0.9912023082669964,
+    0.9823785126533147,
+    0.9940998329156224,
+    0.9646281567678948
+  ],
+  "cv_accuracy_scores": [
+    0.9736070381231672,
+    0.9912023460410557,
+    0.9824046920821115,
+    0.9941348973607038,
+    0.9648093841642229
+  ],
+  "statistical_tests": {
+    "candidate_a": "no_feature_selection__random_forest",
+    "candidate_b": "hybrid_anova_mi__random_forest",
+    "mcnemar_statistic": 1.3333333333333333,
+    "mcnemar_pvalue": 0.24821307898992026,
+    "paired_test": "Wilcoxon signed-rank",
+    "paired_test_statistic": 3.0,
+    "paired_test_pvalue": 1.0
+  },
+  "selection_metadata": {
+    "scenario": "no_feature_selection",
+    "model": "random_forest",
+    "n_selected_features": 2548,
+    "scaler_name": "StandardScaler"
+  }
+}
