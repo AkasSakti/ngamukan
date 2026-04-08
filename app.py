@@ -185,22 +185,41 @@ if "label" in source_df.columns:
     st.subheader("Evaluation on Provided Labels")
     y_true = source_df["label"].astype(str).to_numpy()
     y_pred = results_df["predicted_label"].astype(str).to_numpy()
+    expected_labels = set(label_encoder.classes_)
+    observed_labels = set(pd.Series(y_true).dropna().unique())
+    valid_labels = sorted(expected_labels.intersection(observed_labels))
 
-    acc = accuracy_score(y_true, y_pred)
-    st.metric("Accuracy on current input", f"{acc:.4f}")
+    if not valid_labels:
+        st.warning(
+            "Kolom `label` ditemukan, tetapi nilainya tidak cocok dengan kelas model. "
+            "Evaluasi otomatis dilewati. Gunakan label: "
+            + ", ".join(label_encoder.classes_)
+        )
+    else:
+        mask = pd.Series(y_true).isin(expected_labels).to_numpy()
+        filtered_y_true = y_true[mask]
+        filtered_y_pred = y_pred[mask]
 
-    cm = confusion_matrix(y_true, y_pred, labels=list(label_encoder.classes_))
-    cm_df = pd.DataFrame(cm, index=label_encoder.classes_, columns=label_encoder.classes_)
-    st.dataframe(cm_df, use_container_width=True)
+        if len(filtered_y_true) != len(y_true):
+            st.warning(
+                f"{len(y_true) - len(filtered_y_true)} baris diabaikan saat evaluasi karena label di luar kelas model."
+            )
 
-    report = classification_report(
-        y_true,
-        y_pred,
-        labels=list(label_encoder.classes_),
-        output_dict=True,
-        zero_division=0,
-    )
-    st.dataframe(pd.DataFrame(report).transpose(), use_container_width=True)
+        acc = accuracy_score(filtered_y_true, filtered_y_pred)
+        st.metric("Accuracy on current input", f"{acc:.4f}")
+
+        cm = confusion_matrix(filtered_y_true, filtered_y_pred, labels=list(label_encoder.classes_))
+        cm_df = pd.DataFrame(cm, index=label_encoder.classes_, columns=label_encoder.classes_)
+        st.dataframe(cm_df, use_container_width=True)
+
+        report = classification_report(
+            filtered_y_true,
+            filtered_y_pred,
+            labels=list(label_encoder.classes_),
+            output_dict=True,
+            zero_division=0,
+        )
+        st.dataframe(pd.DataFrame(report).transpose(), use_container_width=True)
 
 
 st.subheader("Single Sample Inspection")
